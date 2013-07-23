@@ -1,0 +1,4 @@
+:mongo_server:
+  :address: 'localhost'
+  :port: 27017
+:db_name: 'via'
