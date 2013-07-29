@@ -1,5 +1,6 @@
 require 'time'
 require 'models/post'
+require 'bcrypt'
 
 module Controller
   module Blog
@@ -13,6 +14,7 @@ module Controller
     def get_all_posts
       posts = []
       @posts.find.to_a.each{|p| posts << Model::Post.new(p)}
+      posts
     end
 
    def get_single_post(year, month, slug)
@@ -20,17 +22,11 @@ module Controller
      post = Model::Post.new(@posts.find_one({'permalink' => permalink}))
    end
 
-   def login(details)
-     user = @users.find_one({'user' => details['user']})
-     if user['password'] == details['password']
-       result = 'success'
-     else
-       result = {
-         'entered' => details['password'],
-         'user'    => details['user'],
-       }
-     end
-   end
-     
+    def get_posts_by_tag(tag)
+      posts = []
+      @posts.find({'tags' => tag}).to_a.each{|p| posts << Model::Post.new(p)}
+      posts
+    end
+
   end
 end

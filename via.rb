@@ -1,26 +1,56 @@
 require 'sinatra'
+require 'yaml'
 require 'haml'
 
-get '/p/:year/:month/:slug' do
+helpers do
+
+  def logged_in?
+    session[:user] ? true : false
+  end
+
+end
+    
+
+
+get '/admin' do
+  if logged_in?
+    haml :'admin/admin'
+  else
+    haml :'admin/login'
+  end
+end
+
+post '/admin' do
+  result = Controller::Admin.login(params[:post])
+  if result[:response] == 'success' 
+    session[:user] = result['user']
+    redirect to('/admin')
+  else
+    haml :'admin/login', :locals => {:result => result[:response]}
+  end
+end
+
+get '/admin/post/:year/:month/:slug' do
+  halt 404 unless logged_in?
+  haml :'admin/post'
+end
+
+get '/admin/post' do
+  halt 404 unless logged_in?
+  haml :'admin/post'
+end
+
+post '/admin/post' do
+  Controller::Admin.add_post(params[:post])
+  redirect to('/admin')
+end
+
+get '/:year/:month/:slug' do
   haml :'blog/single'
 end
 
-get '/login' do
-  haml :'blog/login'
-end
-
-post '/login' do
-  result = Controller::Blog.login(params[:post])
-  if result == 'success' 
-    redirect to('/')
-  else
-    haml :'blog/login' :locals => {:result => result}
-  end
-end
-  
-post '/add' do
-  Controller::Blog.add_post(params[:post])
-  redirect to('/')
+get '/tag/:tag' do
+  haml :'blog/temp', :locals => {:method => :get_posts_by_tag}
 end
 
 get '/' do

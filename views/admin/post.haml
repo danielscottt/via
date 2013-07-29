@@ -1,0 +1,49 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title Sign in
+    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src => "/js/common.js"}
+    :css
+      body {
+        background-color: #f0f0f0;
+      }
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          .brand{:style => "color: #fff;"} <i class='icon-gears'></i> #{CONFIG[:admin_title] ? CONFIG[:admin_title] : CONFIG[:blog_title]}
+          .nav-collapse.collapse
+            %ul.nav
+              %li
+                %a{:href => "/admin"} Home
+              %li.active
+                %a{:href => "/admin/post"} Add / Edit Posts
+              %li
+                %a{:href => "/admin/users"} Add / Edit Users
+    .container{:style => 'padding: 80px 10px 10px 10px; background-color: #fff'}
+      .row
+        .span9
+          - if params[:slug]
+            - post = Controller::Blog.get_single_post(params[:year], params[:month], params[:slug])
+            %h2 Edit a Post
+            %form.form-signin{:method => 'post', :action => '/admin/post'}
+              %p
+                %input.fiel.span11{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
+                %textarea.field.span11{:rows => '15', :name => 'post[body]'} #{post.body}
+                %input.field.span11{:name => 'post[tags]', :value => "#{post.tags.join(', ')}", :type => "text"}
+                %input.field.span11{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'display: inline'}
+                Publish?
+              %button.btn.btn-success{:type => "submit"} Save
+          - else
+            %h2 Create a Post
+            %form.form-signin{:method => 'post', :action => '/admin/post'}
+              %p
+                %input.fiel.span11{:name => 'post[title]', :placeholder => "title", :type => "text"}
+                %textarea.field.span11{:rows => '15', :placeholder => 'body', :name => 'post[body]'}
+                %input.field.span11{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
+                %input.field.span11{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'display: inline'}
+                Publish?
+              %button.btn.btn-success{:type => "submit"} Save

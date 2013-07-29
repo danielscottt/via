@@ -4,6 +4,7 @@
     %title
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
     %script{:src => "/js/common.js"}
@@ -14,30 +15,29 @@
           .span9
             %h1
               %a{:href => "/"}
-                dpitt:~
-                %span{:style => "font-size: 36px;"} $
-            %span#subtitle On which I blog about nothing
+                = CONFIG[:blog_title]
+            %span#subtitle #{CONFIG[:blog_subtitle]}
         .row{:style => "margin-top: 40px;"}
           #nav-left.span3{:style => "margin-top: 10px;"}
             %img{:src => "/img/dan.jpg", :width => '190px'}
             %br/
-            %h4{:style => "color: #898989; letter-spacing: -1px;"} daniel pittman
+            %h4{:style => "color: #898989; letter-spacing: -1px;"} #{CONFIG[:blog_author]}
             %h3{:style => "letter-spacing: -1px; margin-top: -15px;"}
               %a#nav.link{:href => "/archive"} Archive
           .span3
           .span9
-            - posts = Controller::Blog.send(method)
+            - posts = params[:tag] ? Controller::Blog.send(method, params[:tag]) : Controller::Blog.send(method)
             - posts.each do |post|
               %h2{:style => "margin-top: 10px;"} 
-                %a{:href => "/p/#{post['permalink']}"}>#{post['title']}
+                %a{:href => "/p/#{post.permalink}"}>#{post.title}
               .post-body
                 %p 
-                  = post['body']
+                  != post.body
               .post-footer
-                #{Time.at(post['timestamp']).strftime('%m.%d.%Y')}
+                #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
                 |
                 Tagged:&nbsp;
-                - post['tags'].each do |tag|
+                - post.tags.each do |tag|
                   %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
                 %hr{:style => "margin: 0"}
     #footer

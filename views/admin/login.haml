@@ -1,0 +1,22 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title Sign in
+    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
+    %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src => "/js/common.js"}
+    :css
+      body {
+        background-color: #f0f0f0;
+      }
+  %body
+    .container
+      %form.form-signin{:method => 'post', :action => '/admin'}
+        %h1.form-signin-heading #{CONFIG[:blog_title]}
+        %h2{:style => 'display: inline;'}  Sign in
+        %span{:style => 'color: #900; font-size: 16px;'} &nbsp;#{locals[:result]}
+        %input.input-block-level{:name => 'post[user]', :placeholder => "User", :type => "text"}
+        %input.input-block-level{:name => 'post[password]', :placeholder => "Password", :type => "password"}
+        %button.btn.btn-primary{:type => "submit"} Sign in

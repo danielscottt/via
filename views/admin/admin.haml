@@ -1,0 +1,42 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title Sign in
+    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src => "/js/common.js"}
+    :css
+      body {
+        background-color: #f0f0f0;
+      }
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          .brand{:style => 'color: #fff;'} <i class='icon-gears'></i> #{CONFIG[:admin_title] ? CONFIG[:admin_title] : CONFIG[:blog_title]}
+          .nav-collapse.collapse
+            %ul.nav
+              %li.active
+                %a{:href => "/admin"} Home
+              %li
+                %a{:href => "/admin/post"} Add / Edit Posts
+              %li
+                %a{:href => "/admin/users"} Add / Edit Users
+    .container{:style => 'padding: 80px 10px 10px 10px; background-color: #fff'}
+      .row
+        .span12
+          %h2 Recent Posts
+          %table.table.table-hover
+            %thead
+              %tr
+                %th Posted on
+                %th Title
+                %th Published?
+            %tbody
+              - posts = Controller::Blog.get_all_posts
+              - posts.each do |post|
+                %tr
+                  %td #{Time.at(post.timestamp)}
+                  %td #{post.title}
+                  %td #{post.published?}

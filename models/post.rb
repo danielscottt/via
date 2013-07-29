@@ -4,11 +4,14 @@ module Model
     attr_reader :title, :body, :tags, :timestamp
 
     def initialize(details, db = nil)
+      @details   = details
+      @id        = details['id']
       @title     = details['title']
       @body      = details['body']
       @tags      = details['tags']
       @timestamp = details['timestamp']
-      @cursor    = db['posts'] if db
+      @published = details['published']
+      @cursor    = db if db
     end
 
     def month
@@ -26,10 +29,16 @@ module Model
     def slug
       @title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
     end
+    
+    def published?
+      @published
+    end
 
     def save
-      details['permalink'] = permalink
-      @cusror.update(details, {'$set' => details})
+      @details['permalink'] = permalink
+      @details['tags']      = @details['tags'].split(', ')
+      @details['id']      ||= SecureRandom.uuid
+      @cursor.update({'id' => @details['id']}, {'$set' => @details}, :upsert => true)
     end
 
   end
