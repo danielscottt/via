@@ -7,13 +7,15 @@ module Controller
   module Admin
     extend self
 
+    attr_reader :posts, :users
+
     def init(db)
       @posts = db['posts']
       @users = db['users']
     end
 
     def login(details)
-      user = @users.find_one({'user' => details['user']})
+      user = users.find_one({'user' => details['user']})
       if user
         result = user.delete_if{|k,v| k == '_id'}
         if result['password'] == BCrypt::Engine.hash_secret(details['password'], result['salt'])
@@ -28,10 +30,17 @@ module Controller
     end
 
     def add_post(details)
-      markdown = Redcarpet::Markdown.new(HTMLWithPygments, :fenced_code_blocks => true)
-      details['body']      = markdown.render(details['body']) 
       details['timestamp'] = Time.now
-      Model::Post.new(details, @posts).save
+      Model::Post.new(details, posts).save
+    end
+
+    def delete_post(params)
+      post_hash = posts.find_one({'id' => params[:id]})
+      post = Model::Post.new(post_hash, posts)
+      post.delete
+    end
+
+    def add_user(params)
     end
 
   end

@@ -13,7 +13,7 @@ module Controller
 
     def get_all_posts
       posts = []
-      @posts.find.to_a.each{|p| posts << Model::Post.new(p)}
+      @posts.find({}, {:sort => ['timestamp', :desc]}).to_a.each{|p| posts << Model::Post.new(p)}
       posts
     end
 
@@ -26,6 +26,11 @@ module Controller
       posts = []
       @posts.find({'tags' => tag}).to_a.each{|p| posts << Model::Post.new(p)}
       posts
+    end
+    
+    def compile_body(body)
+      markdown = Redcarpet::Markdown.new(HTMLWithPygments, :fenced_code_blocks => true)
+      markdown.render(body) 
     end
 
   end

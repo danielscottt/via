@@ -18,7 +18,8 @@ h1 {
   letter-spacing: -1px;
 }
 h1 a {
-  color: #222;
+  color: #fff;
+  text-shadow: 0px 1px #222;
 }
 
 h1 a:hover {
@@ -34,7 +35,7 @@ h2 a {
 }
 
 h2 a:hover {
-  color: #111;
+  color: #f0f0f0;
   text-decoration: none;
 }
 
@@ -43,7 +44,7 @@ h2 a:hover {
 }
 
 #nav {
-  color: #222;
+  color: #f0f0f0;
 }
 
 #nav:hover {
@@ -55,25 +56,23 @@ h2 a:hover {
 }
 
 #subtitle {
-  color: #898989;
+  color: #878787;
   letter-spacing: -1px;
   font-size: 24px;
 }
 
 .post-body {
   margin-top: 10px;
-  color: #222;
-  font-size: 16px;
-  font-weight: 100;
+  color: #f0f0f0;
 }
 
 .post-footer {
   margin: 15px, 0px 0px 0px;
-  color: #898989;
+  color: #878787;
 }
 
 #footer {
- background-color: #656565;
+ background-color: #878787;
  position: absolute;
  height: 130px;
  bottom: 0;
@@ -90,7 +89,7 @@ h2 a:hover {
 }
 
 #github-link {
-  color: #898989;
+  color: #f0f0f0;
 }
 
 #twitter-link {

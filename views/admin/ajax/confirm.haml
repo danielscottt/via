@@ -1,0 +1,4 @@
+- post = Controller::Blog.get_single_post(params['year'], params['month'], params['slug'])
+Are you sure you want to delete this Post?
+%h4#del-title{:post_id => "#{post.id}"} <a href="/#{post.permalink}">#{post.title}</a>
+#{post.body[0..49]}...

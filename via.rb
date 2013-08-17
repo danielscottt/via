@@ -41,7 +41,19 @@ get '/admin/post' do
 end
 
 post '/admin/post' do
+  puts params[:published]
   Controller::Admin.add_post(params[:post])
+  redirect to('/admin')
+end
+
+get '/admin/:year/:month/:slug/delete/confirm' do
+  halt 404 unless logged_in?
+  haml :'admin/ajax/confirm'
+end
+
+post '/admin/post/:id/delete' do
+  halt 404 unless logged_in?
+  Controller::Admin.delete_post(params)
   redirect to('/admin')
 end
 

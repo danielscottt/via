@@ -4,6 +4,8 @@
     %title
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/darkstrap.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
     %script{:src => "/js/common.js"}
@@ -14,24 +16,23 @@
           .span9
             %h1
               %a{:href => "/"}
-                dpitt:~
-                %span{:style => "font-size: 36px;"} $
+                #{CONFIG[:blog_title]}
             %span#subtitle On which I blog about nothing
         .row{:style => "margin-top: 40px;"}
           #nav-left.span3{:style => "margin-top: 10px;"}
             %img{:src => "/img/dan.jpg", :width => '190px'}
             %br/
-            %h4{:style => "color: #898989; letter-spacing: -1px;"} daniel pittman
+            %h4{:style => "color: #878787; letter-spacing: -1px;"} daniel pittman
             %h3{:style => "letter-spacing: -1px; margin-top: -15px;"}
               %a#nav.link{:href => "/archive"} Archive
           .span3
           .span9
             - post = Controller::Blog.get_single_post(params['year'], params['month'], params['slug'])
             %h2{:style => "margin-top: 10px;"} 
-              %a{:href => "#{post.permalink}"}>#{post.title}
+              %a{:href => "/#{post.permalink}"}>#{post.title}
             .post-body
               %p 
-                = post.body
+                != Controller::Blog.compile_body(post.body)
             .post-footer
               #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
               |

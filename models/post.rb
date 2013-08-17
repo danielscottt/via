@@ -1,7 +1,7 @@
 module Model
   class Post
 
-    attr_reader :title, :body, :tags, :timestamp
+    attr_reader :title, :body, :tags, :timestamp, :details, :cursor, :published, :id
 
     def initialize(details, db = nil)
       @details   = details
@@ -15,11 +15,11 @@ module Model
     end
 
     def month
-      @timestamp.month
+      timestamp.month
     end
 
     def year
-      @timestamp.year
+      timestamp.year
     end
 
     def permalink
@@ -27,18 +27,26 @@ module Model
     end
 
     def slug
-      @title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+      title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
     end
     
-    def published?
-      @published
+    def is_published?
+      if published == 'on'
+        true
+      else
+        false
+      end 
     end
 
     def save
-      @details['permalink'] = permalink
-      @details['tags']      = @details['tags'].split(', ')
-      @details['id']      ||= SecureRandom.uuid
-      @cursor.update({'id' => @details['id']}, {'$set' => @details}, :upsert => true)
+      details['permalink'] = permalink
+      details['tags']      = @details['tags'].split(', ')
+      details['id']      ||= SecureRandom.uuid
+      cursor.update({'id' => @details['id']}, {'$set' => @details}, :upsert => true)
+    end
+
+    def delete
+      cursor.remove({'id' => id})
     end
 
   end

@@ -4,6 +4,7 @@
     %title
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/darkstrap.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
@@ -28,18 +29,20 @@
           .span9
             - posts = params[:tag] ? Controller::Blog.send(method, params[:tag]) : Controller::Blog.send(method)
             - posts.each do |post|
-              %h2{:style => "margin-top: 10px;"} 
-                %a{:href => "/p/#{post.permalink}"}>#{post.title}
-              .post-body
-                %p 
-                  != post.body
-              .post-footer
-                #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
-                |
-                Tagged:&nbsp;
-                - post.tags.each do |tag|
-                  %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
-                %hr{:style => "margin: 0"}
+              - if post.is_published?
+                %h2{:style => "margin-top: 10px;"} 
+                  %a{:href => "/#{post.permalink}"}>#{post.title}
+                .post-body
+                  %p 
+                    = preserve do
+                      != Controller::Blog.compile_body(post.body)
+                .post-footer
+                  #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
+                  |
+                  Tagged:&nbsp;
+                  - post.tags.each do |tag|
+                    %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
+                  %hr{:style => "margin: 0"}
     #footer
       .container
         .row
