@@ -1,11 +1,13 @@
+- if params[:slug]
+  - post = Controller::Blog.get_single_post(params[:year], params[:month], params[:slug])
 !!!
 %html{:lang => "en"}
   %head
-    %title Sign in
+    %title #{post ? "Editing \"#{post.title}\" | #{CONFIG[:blog_details][:title]}" : "Add a Post | #{CONFIG[:blog_details][:title]}"}
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
-    %script{:src => "/js/common.js"}
+    %script{:src => "/js/admin.js"}
     :css
       body {
         background-color: #f0f0f0;
@@ -14,7 +16,7 @@
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
-          .brand{:style => "color: #fff;"} <i class='icon-gears'></i> #{CONFIG[:admin_title] ? CONFIG[:admin_title] : CONFIG[:blog_title]}
+          .brand{:style => "color: #fff;"} <i class='icon-gears'></i> #{CONFIG[:blog_details][:title]}
           .nav-collapse.collapse
             %ul.nav
               %li
@@ -26,16 +28,16 @@
     .container{:style => 'padding: 80px 10px 10px 10px; background-color: #fff'}
       .row
         .span9
-          - if params[:slug]
-            - post = Controller::Blog.get_single_post(params[:year], params[:month], params[:slug])
+          - if post
             %h2 Edit a Post
             %form.form-signin{:method => 'post', :action => '/admin/post'}
               %p
-                %input.fiel.span11{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
+                %input.field.span11{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
                 %textarea.field.span11{:rows => '15', :name => 'post[body]'} #{post.body}
                 %input.field.span11{:name => 'post[tags]', :value => "#{post.tags.join(', ')}", :type => "text"}
-                %input.field.span11{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'display: inline'}
-                Publish?
+                %h4{:style => 'display: inline'} Publish? &nbsp;
+                = "<input id='publish' name='post[published]' style='margin-bottom: 10px' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
+                %input.field{:name => 'post[id]', :type => "text", :id => 'id', :value => "#{post.id}", :style => 'display: none'}
               %button.btn.btn-success{:type => "submit"} Save
           - else
             %h2 Create a Post
@@ -44,6 +46,6 @@
                 %input.fiel.span11{:name => 'post[title]', :placeholder => "title", :type => "text"}
                 %textarea.field.span11{:rows => '15', :placeholder => 'body', :name => 'post[body]'}
                 %input.field.span11{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
-                %input.field.span11{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'display: inline'}
-                Publish?
+                %h4{:style => 'display: inline'} Publish? &nbsp;
+                %input{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'margin-bottom: 10px'}
               %button.btn.btn-success{:type => "submit"} Save

@@ -41,7 +41,7 @@ get '/admin/post' do
 end
 
 post '/admin/post' do
-  puts params[:published]
+  halt 404 unless logged_in?
   Controller::Admin.add_post(params[:post])
   redirect to('/admin')
 end

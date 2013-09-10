@@ -31,11 +31,7 @@ module Model
     end
     
     def is_published?
-      if published == 'on'
-        true
-      else
-        false
-      end 
+      published
     end
 
     def save

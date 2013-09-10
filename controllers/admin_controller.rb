@@ -30,6 +30,11 @@ module Controller
     end
 
     def add_post(details)
+      if details[:published] == 'on'
+          details[:pubslished] == true
+      else
+          details[:pubslished] == false
+      end
       details['timestamp'] = Time.now
       Model::Post.new(details, posts).save
     end

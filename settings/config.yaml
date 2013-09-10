@@ -1,8 +1,9 @@
 :mongo:
-  :address: 'localhost'
+  :address: localhost
   :port: 27017
-  :db_name: 'via'
-:blog_title: 'dpitt:~<span style="font-size: 36px;">$</span>'
-:blog_subtitle: 'On which I blog about nothing'
-:admin_title: 'dpitt.me'
-:blog_author: 'dan pittman'
+  :db_name: via
+:blog_details:
+  :title: dpitt.me
+  :title_html: 'dpitt:~<span style="font-size: 36px;">$</span>'
+  :subtitle: On which I blog about nothing
+  :author: dan pittman

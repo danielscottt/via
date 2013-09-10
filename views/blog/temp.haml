@@ -1,14 +1,14 @@
 !!!
 %html
   %head
-    %title
+    %title #{params[:tag] ? "#{CONFIG[:blog_details][:title]} | posts tagged \'#{params[:tag]}\'" : "#{CONFIG[:blog_details][:title]} | dan pittman"}
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/darkstrap.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
-    %script{:src => "/js/common.js"}
+    %script{:src => "/js/blog.js"}
   %body
     .container-liquid
       .container{:style => "margin-top: 40px"}
@@ -16,15 +16,13 @@
           .span9
             %h1
               %a{:href => "/"}
-                = CONFIG[:blog_title]
-            %span#subtitle #{CONFIG[:blog_subtitle]}
+                = CONFIG[:blog_details][:title_html] ? CONFIG[:blog_details][:title_html] : CONFIG[:blog_details][:title]
+            %span#subtitle #{CONFIG[:blog_details][:subtitle]}
         .row{:style => "margin-top: 40px;"}
           #nav-left.span3{:style => "margin-top: 10px;"}
             %img{:src => "/img/dan.jpg", :width => '190px'}
-            %br/
-            %h4{:style => "color: #898989; letter-spacing: -1px;"} #{CONFIG[:blog_author]}
-            %h3{:style => "letter-spacing: -1px; margin-top: -15px;"}
-              %a#nav.link{:href => "/archive"} Archive
+            %p
+              %h4{:style => "color: #898989; letter-spacing: -1px;"} #{CONFIG[:blog_details][:author]}
           .span3
           .span9
             - posts = params[:tag] ? Controller::Blog.send(method, params[:tag]) : Controller::Blog.send(method)
@@ -42,21 +40,13 @@
                   Tagged:&nbsp;
                   - post.tags.each do |tag|
                     %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
-                  %hr{:style => "margin: 0"}
-    #footer
-      .container
-        .row
-          .span4
-            %h4{:style => "margin: 0;"} dan
-            I like beer, coffee, computers, pictures of things, babies (preferrably mine), coding badly, and doing so in Vim.
-          .span4{:style => "text-align: center;"}
-            %h4{:style => "margin: 0;"} You can find me at these places
-            %a#github-link{:href => "https://github.com/danielscottt"}
-              %i.icon-github.icon-3x
-            %a#twitter-link{:href => "https://twitter.com/danielscottt"}
-              %i.icon-twitter.icon-3x
-            %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
-              %i.icon-linkedin.icon-3x
-          #descrip.span4
-            %h4{:style => "margin: 0;"} About this blog
-            An aggragate of various ephemera compiled for no reason.  But who cares, really?
+                  %hr{:style => "margin: 0, color: #7c7c7c"}
+            .row{:style => 'text-align: center; margin-top: 40px;'}
+              &copy; #{CONFIG[:blog_author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.
+              #links
+                %a#github-link{:href => "https://github.com/danielscottt"}
+                  %i.icon-github.icon-2x
+                %a#twitter-link{:href => "https://twitter.com/danielscottt"}
+                  %i.icon-twitter.icon-2x
+                %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
+                  %i.icon-linkedin.icon-2x
