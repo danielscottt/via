@@ -1,3 +1,4 @@
+:log_path: /a_path/via.log
 :mongo:
   :address: localhost
   :port: 27017
