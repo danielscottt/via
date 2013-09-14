@@ -30,7 +30,8 @@
               %a{:href => "/#{post.permalink}"}>#{post.title}
             .post-body
               %p 
-                != Controller::Blog.compile_body(post.body)
+                = preserve do
+                  != Controller::Blog.compile_body(post.body)
             .post-footer
               #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
               |

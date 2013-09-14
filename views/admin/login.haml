@@ -13,7 +13,7 @@
   %body
     .container
       %form.form-signin{:method => 'post', :action => '/admin'}
-        %h1.form-signin-heading #{CONFIG[:blog_title]}
+        %h1.form-signin-heading #{CONFIG[:blog_details][:title]}
         %h2{:style => 'display: inline;'}  Sign in
         %span{:style => 'color: #900; font-size: 16px;'} &nbsp;#{locals[:result]}
         %input.input-block-level{:name => 'post[user]', :placeholder => "User", :type => "text"}
