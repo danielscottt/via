@@ -10,7 +10,9 @@ helpers do
 
 end
     
-
+before /^\/*/ do
+  LOGGER.info("\"#{request.ip} #{request.request_method} #{request.path_info}\" via #{request.referrer}")
+end
 
 get '/admin' do
   if logged_in?

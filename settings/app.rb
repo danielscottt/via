@@ -10,6 +10,9 @@ CONFIG = YAML.load_file(File.join(root_path, 'settings/config.yaml'))
 conn   = CONFIG[:mongo] ? Mongo::MongoClient.new(CONFIG[:mongo][:address], CONFIG[:mongo][:port]) : Mongo::MongoClient.new
 db     = conn[CONFIG[:mongo][:db_name]]
 
+require 'logger'
+LOGGER = Logger.new(CONFIG[:log_path], 'weekly')
+
 require 'blog_controller'
 require 'admin_controller'
 Controller::Blog.init(db)
