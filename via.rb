@@ -62,7 +62,6 @@ end
 
 get '/:year/:month/:slug' do
   post = Controller::Blog.get_single_post(params['year'], params['month'], params['slug'])
-  puts post
   if post
     if post.is_published? || logged_in?
       haml :'blog/single', :locals => {:post => post}
