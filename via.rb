@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'yaml'
 require 'haml'
+require 'erb'
 
 helpers do
 
@@ -44,8 +45,8 @@ end
 
 post '/admin/post' do
   halt 404 unless logged_in?
-  Controller::Admin.add_post(params[:post])
-  redirect to('/admin')
+  post = Controller::Admin.add_post(params[:post])
+  erb :'admin/post_response', :locals => {:post => post}
 end
 
 get '/admin/:year/:month/:slug/delete/confirm' do
@@ -60,7 +61,17 @@ post '/admin/post/:id/delete' do
 end
 
 get '/:year/:month/:slug' do
-  haml :'blog/single'
+  post = Controller::Blog.get_single_post(params['year'], params['month'], params['slug'])
+  puts post
+  if post
+    if post.is_published? || logged_in?
+      haml :'blog/single', :locals => {:post => post}
+    else
+      halt 404
+    end
+  else
+    halt 404
+  end
 end
 
 get '/tag/:tag' do

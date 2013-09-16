@@ -19,7 +19,12 @@ module Controller
 
    def get_single_post(year, month, slug)
      permalink = "#{year}/#{month}/#{slug}"
-     post = Model::Post.new(@posts.find_one({'permalink' => permalink}))
+     post_hash = @posts.find_one({'permalink' => permalink})
+     if post_hash
+       post = Model::Post.new(@posts.find_one(post_hash))
+     else
+       nil
+     end
    end
 
     def get_posts_by_tag(tag)

@@ -30,22 +30,28 @@
         .span9
           - if post
             %h2 Edit a Post
-            %form.form-signin{:method => 'post', :action => '/admin/post'}
+            %form#post-form{:method => 'post', :action => '/admin/post'}
               %p
                 %input.field.span11{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
                 %textarea.field.span11{:rows => '15', :name => 'post[body]'} #{post.body}
                 %input.field.span11{:name => 'post[tags]', :value => "#{post.tags.join(', ')}", :type => "text"}
                 %h4{:style => 'display: inline'} Publish? &nbsp;
-                = "<input id='publish' name='post[published]' style='margin-bottom: 10px' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
+                = "<input id='publish' name='post[pub]' style='margin-bottom: 10px' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
                 %input.field{:name => 'post[id]', :type => "text", :id => 'id', :value => "#{post.id}", :style => 'display: none'}
-              %button.btn.btn-success{:type => "submit"} Save
+              %button.post-btn.btn.btn-success{:type => "submit", :reload => "true"} Save
+              %button.post-btn.btn.btn-success{:type => "submit"} Save and Continue Editing
+              %button.post-btn.btn.btn-success{:type => "submit", :preview => "true"} Preview
+              %button#post-btn-cancel.btn.btn-danger Cancel
           - else
             %h2 Create a Post
-            %form.form-signin{:method => 'post', :action => '/admin/post'}
+            %form#post-form{:method => 'post', :action => '/admin/post'}
               %p
                 %input.fiel.span11{:name => 'post[title]', :placeholder => "title", :type => "text"}
                 %textarea.field.span11{:rows => '15', :placeholder => 'body', :name => 'post[body]'}
                 %input.field.span11{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
                 %h4{:style => 'display: inline'} Publish? &nbsp;
-                %input{:name => 'post[published]', :type => "checkbox", :id => 'publish', :style => 'margin-bottom: 10px'}
-              %button.btn.btn-success{:type => "submit"} Save
+                %input{:name => 'post[pub]', :type => "checkbox", :id => 'publish', :style => 'margin-bottom: 10px'}
+              %button.post-btn.btn.btn-success{:type => "submit", :reload => 'true'} Save
+              %button.post-btn.btn.btn-success{:type => "submit"} Save and Continue Editing
+              %button.post-btn.btn.btn-success{:type => "submit", :preview => 'true' } Preview
+              %button#post-btn-cancel.btn.btn-danger Cancel

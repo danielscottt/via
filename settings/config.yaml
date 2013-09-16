@@ -1,4 +1,4 @@
-:log_path: /a_path/via.log
+:log_path: /home/vagrant/src/via/log/via.log
 :mongo:
   :address: localhost
   :port: 27017

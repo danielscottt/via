@@ -30,13 +30,15 @@ module Controller
     end
 
     def add_post(details)
-      if details[:published] == 'on'
-          details[:pubslished] == true
+      if details['pub']
+        details['published'] = true
       else
-          details[:pubslished] == false
+        details['published'] = false
       end
       details['timestamp'] = Time.now
-      Model::Post.new(details, posts).save
+      post = Model::Post.new(details.delete_if{|k, v| k == 'pub'}, posts)
+      post.save
+      post
     end
 
     def delete_post(params)
