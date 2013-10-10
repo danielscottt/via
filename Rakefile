@@ -69,5 +69,6 @@ task :init do
   user = STDIN.gets.chomp
   pw = handle_passwords
   init_mongo(user, pw)
+  sh %{mkdir -p log; touch log/via.log}
   STDOUT.puts "done."
 end
