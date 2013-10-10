@@ -25,20 +25,25 @@ end
 
 def init_mongo(username, password)
   STDOUT.puts "Initializing db..."
-  conn  = CONFIG[:mongo] ? Mongo::MongoClient.new(CONFIG[:mongo][:address], CONFIG[:mongo][:port]) : Mongo::MongoClient.new
-  db    = conn[CONFIG[:mongo][:db_name]]
-  users = db['users']
-  STDOUT.puts "Generating password hash..."
-  salt  = BCrypt::Engine.generate_salt
-  hash  = BCrypt::Engine.hash_secret(password, salt)
-  STDOUT.puts "Saving user..."
-  users.update({'username' => username}, {
-    '$set' => {
-      'user' => username, 
-      'password' => hash,
-      'salt'     => salt,
-    }
-  }, :upsert => true)
+  begin
+    conn  = CONFIG[:mongo] ? Mongo::MongoClient.new(CONFIG[:mongo][:address], CONFIG[:mongo][:port]) : Mongo::MongoClient.new
+    db    = conn[CONFIG[:mongo][:db_name]]
+    users = db['users']
+    STDOUT.puts "Generating password hash..."
+    salt  = BCrypt::Engine.generate_salt
+    hash  = BCrypt::Engine.hash_secret(password, salt)
+    STDOUT.puts "Saving user..."
+    users.update({'username' => username}, {
+      '$set' => {
+        'user' => username, 
+        'password' => hash,
+        'salt'     => salt,
+      }
+    }, :upsert => true)
+  rescue => e
+    puts "initializing db failed with message: \"#{e.message}\"\nHave you installed Mongo?".red
+    exit 1
+  end
 end
 
 def handle_passwords
