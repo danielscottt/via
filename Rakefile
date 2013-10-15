@@ -29,18 +29,23 @@ end
 
 def init_mongo(username, password)
   STDOUT.puts "Initializing db..."
-  users = @db['users'] 
-  STDOUT.puts "Generating password hash..."
-  salt  = BCrypt::Engine.generate_salt
-  hash  = BCrypt::Engine.hash_secret(password, salt)
-  STDOUT.puts "Saving user..."
-  users.update({'username' => username}, {
-    '$set' => {
-      'user' => username, 
-      'password' => hash,
-      'salt'     => salt,
-    }
-  }, :upsert => true)
+  begin
+    users = @db['users']
+    STDOUT.puts "Generating password hash..."
+    salt  = BCrypt::Engine.generate_salt
+    hash  = BCrypt::Engine.hash_secret(password, salt)
+    STDOUT.puts "Saving user..."
+    users.update({'username' => username}, {
+      '$set' => {
+        'user' => username, 
+        'password' => hash,
+        'salt'     => salt,
+      }
+    }, :upsert => true)
+  rescue => e
+    puts "initializing db failed with message: \"#{e.message}\"\nHave you installed Mongo?".red
+    exit 1
+  end
 end
 
 def handle_passwords
@@ -66,6 +71,7 @@ task :init do
   user = STDIN.gets.chomp
   pw   = handle_passwords
   init_mongo(user, pw)
+  sh %{mkdir -p log; touch log/via.log}
   STDOUT.puts "done."
 end
 
