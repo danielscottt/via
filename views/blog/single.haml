@@ -4,10 +4,11 @@
     %title #{CONFIG[:blog_details][:title]} | #{post.title}
     %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "/css/darkstrap.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://fonts.googleapis.com/css?family=Source+Sans+Pro", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"}
     %script{:src => "/js/blog.js"}
   %body
     .container-liquid
@@ -20,9 +21,14 @@
             %span#subtitle #{CONFIG[:blog_details][:subtitle]}
         .row{:style => "margin-top: 40px;"}
           #nav-left.span3{:style => "margin-top: 10px;"}
-            %img{:src => "/img/dan.jpg", :width => '190px'}
+            %img{:src => "/img/#{rand(6) + 1}.jpg", :width => '200px'}
             %p
               %h4{:style => "color: #898989; letter-spacing: -1px;"} #{CONFIG[:blog_details][:author]}
+            %p#nav-descrip
+              = CONFIG[:blog_details][:descrip]
+            - CONFIG[:blog_details][:socials].each do |i|
+              %li
+                %a{:href => "#{i[:link]}", :target => '_blank'} #{i[:text]}
           .span3
           .span9
             %h2{:style => "margin-top: 10px;"} 
