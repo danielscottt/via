@@ -8,9 +8,3 @@
   :title_html: 'dpitt:~<span style="font-size: 36px;">$</span>'
   :subtitle: On which I blog about nothing
   :author: dan pittman
-  :descrip: "I <i>computer</i>."
-  :socials:
-    - :link: https://twitter.com/danielscottt
-      :text: <i class="icon-twitter-sign icon-large" data-hover-color="#4099ff"></i> Twitter
-    - :link: https://github.com/danielscottt
-      :text: <i class="icon-github-sign icon-large" data-hover-color="#7c7c7c"></i> GitHub

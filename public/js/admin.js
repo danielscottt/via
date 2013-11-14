@@ -38,7 +38,6 @@ $(function() {
       data: $('#post-form').serialize(),
       success: function(resp) {
         var json = JSON.parse(resp);
-        console.log(json.response.post);
         if ($(_this).attr('reload') == 'true') {
           window.location.href = '/admin';
         }
