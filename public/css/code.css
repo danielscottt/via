@@ -1,4 +1,10 @@
-pre{background-color:#073642;color:#93a1a1}
+@font-face {font-family: Anonymous; src: url('/css/anonymous-pro-minus.ttf')}
+pre {
+  font-family: Anonymous, sans-serif;
+  font-size: 16px;
+  background-color:#073642;
+  color:#93a1a1
+}
 pre .c{color:#586e75 !important;font-style:italic !important}
 pre .cm{color:#586e75 !important;font-style:italic !important}
 pre .cp{color:#586e75 !important;font-style:italic !important}
