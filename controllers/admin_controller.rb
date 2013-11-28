@@ -36,6 +36,7 @@ module Controller
         details['published'] = false
       end
       details['timestamp'] = Time.now
+      details['tags']      = details['tags'].split(', ')
       post = Model::Post.new(details.delete_if{|k, v| k == 'pub'}, posts)
       post.save
       post

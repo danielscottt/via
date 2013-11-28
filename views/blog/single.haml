@@ -2,40 +2,40 @@
 %html
   %head
     %title #{CONFIG[:blog_details][:title]} | #{post.title}
-    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "http://fonts.googleapis.com/css?family=Source+Sans+Pro", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/code.css", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"}
   %body
-    .container-liquid
-      .container{:style => "margin-top: 40px"}
-        .row
-          %h1
-            %a{:href => "/"}
-              = CONFIG[:blog_details][:title_html] ? CONFIG[:blog_details][:title_html] : CONFIG[:blog_details][:title]
-          %span#subtitle #{CONFIG[:blog_details][:subtitle]}
-        .row{:style => "margin-top: 40px;"}
-          %h2{:style => "margin-top: 10px;"} 
-            %a{:href => "/#{post.permalink}"}>#{post.title}
-          .post-body
-            %p 
-              = preserve do
-                != Controller::Blog.compile_body(post.body)
-          .post-footer
-            #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
-            |
-            Tagged:&nbsp;
-            - post.tags.each do |tag|
-              %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
-          .row{:style => 'text-align: center; margin-top: 40px;'}
-            &copy; #{CONFIG[:blog_details][:author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.
-            #links
-              %a#github-link{:href => "https://github.com/danielscottt"}
-                %i.icon-github.icon-2x
-              %a#twitter-link{:href => "https://twitter.com/danielscottt"}
-                %i.icon-twitter.icon-2x
-              %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
-                %i.icon-linkedin.icon-2x
+    .container{:style => "margin-top: 40px"}
+      .row
+        %h1
+          %a{:href => "/"}
+            = CONFIG[:blog_details][:title_html] ? CONFIG[:blog_details][:title_html] : CONFIG[:blog_details][:title]
+        %span#subtitle #{CONFIG[:blog_details][:subtitle]}
+      .row{:style => "margin-top: 40px;"}
+        %h2#post-title
+          %a{:href => "/#{post.permalink}"}>#{post.title}
+        .post-body
+          %p 
+            = preserve do
+              != Controller::Blog.compile_body(post.body)
+        .post-footer
+          #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
+          |
+          Tagged:&nbsp;
+          - post.tags.each do |tag|
+            %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
+          %hr{:style => "margin: 0, color: #7c7c7c"}
+        .row{:style => 'text-align: center; margin-top: 40px;'}
+          &copy; #{CONFIG[:blog_details][:author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.
+          #links
+            %a#github-link{:href => "https://github.com/danielscottt"}
+              %i.fa.fa-github.fa-2x
+            %a#twitter-link{:href => "https://twitter.com/danielscottt"}
+              %i.fa.fa-twitter.fa-2x
+            %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
+              %i.fa.fa-linkedin.fa-2x

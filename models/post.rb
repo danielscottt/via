@@ -5,7 +5,7 @@ module Model
 
     def initialize(details, db = nil)
       @details   = details
-      @id        = details['id']
+      @id        = details['id'].length > 0 ? details['id'] : SecureRandom.uuid
       @title     = details['title']
       @body      = details['body']
       @tags      = details['tags']
@@ -36,9 +36,8 @@ module Model
 
     def save
       details['permalink'] = permalink
-      details['tags']      = @details['tags'].split(', ')
-      details['id']      ||= SecureRandom.uuid
-      cursor.update({'id' => @details['id']}, {'$set' => @details}, :upsert => true)
+      details['id']        = id
+      cursor.update({'id' => details['id']}, {'$set' => details}, :upsert => true)
     end
 
     def delete

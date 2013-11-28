@@ -4,9 +4,12 @@
 %html{:lang => "en"}
   %head
     %title #{post ? "Editing \"#{post.title}\" | #{CONFIG[:blog_details][:title]}" : "Add a Post | #{CONFIG[:blog_details][:title]}"}
-    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href=>"http://fonts.googleapis.com/css?family=PT+Serif:400italic", :rel=>"stylesheet"}
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/admin.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{:src => "/js/admin.js"}
     :css
       body {
@@ -14,44 +17,44 @@
       }
   %body
     .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          .brand{:style => "color: #fff;"} <i class='icon-gears'></i> #{CONFIG[:blog_details][:title]}
-          .nav-collapse.collapse
-            %ul.nav
-              %li
-                %a{:href => "/admin"} Home
-              %li.active
-                %a{:href => "/admin/post"} Add / Edit Posts
-              %li
-                %a{:href => "/admin/users"} Add / Edit Users
-    .container{:style => 'padding: 80px 10px 10px 10px; background-color: #fff'}
+      .container
+        .navbar-header
+          .navbar-brand{:style => 'color: #fff;'} <i class='fa fa-gears'></i> #{CONFIG[:blog_details][:title]}
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %a{:href => "/admin"} Home
+            %li.active
+              %a{:href => "/admin/post"} Add / Edit Posts
+            %li
+              %a{:href => "/admin/users"} Add / Edit Users
+    .container{:style => 'margin-top: 50px;'}
       .row
-        .span9
-          - if post
-            %h2 Edit a Post
-            %form#post-form{:method => 'post', :action => '/admin/post'}
-              %p
-                %input.field.span11{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
-                %textarea.field.span11{:rows => '15', :name => 'post[body]'} #{post.body}
-                %input.field.span11{:name => 'post[tags]', :value => "#{post.tags.join(', ')}", :type => "text"}
-                %h4{:style => 'display: inline'} Publish? &nbsp;
-                = "<input id='publish' name='post[pub]' style='margin-bottom: 10px' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
-                %input.field{:name => 'post[id]', :type => "text", :id => 'id', :value => "#{post.id}", :style => 'display: none'}
-              %button.post-btn.btn.btn-success{:type => "submit", :reload => "true"} Save
-              %button.post-btn.btn.btn-success{:type => "submit"} Save and Continue Editing
-              %button.post-btn.btn.btn-success{:type => "submit", :preview => "true"} Preview
-              %button#post-btn-cancel.btn.btn-danger Cancel
-          - else
-            %h2 Create a Post
-            %form#post-form{:method => 'post', :action => '/admin/post'}
-              %p
-                %input.fiel.span11{:name => 'post[title]', :placeholder => "title", :type => "text"}
-                %textarea.field.span11{:rows => '15', :placeholder => 'body', :name => 'post[body]'}
-                %input.field.span11{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
-                %h4{:style => 'display: inline'} Publish? &nbsp;
-                %input{:name => 'post[pub]', :type => "checkbox", :id => 'publish', :style => 'margin-bottom: 10px'}
-              %button.post-btn.btn.btn-success{:type => "submit", :reload => 'true'} Save
-              %button.post-btn.btn.btn-success{:type => "submit"} Save and Continue Editing
-              %button.post-btn.btn.btn-success{:type => "submit", :preview => 'true' } Preview
-              %button#post-btn-cancel.btn.btn-danger Cancel
+        - if post
+          %form#post-form{:role => 'form', :method => 'post', :action => '/admin/post'}
+            %p
+              %input#title-post.post-form.form-control{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
+              %textarea#body-post.post-form.form-control{:rows => 7, :placeholder => 'body', :name => 'post[body]'} #{post.body}
+              %input#tags-post.post-form.form-control{:name => 'post[tags]', :value => "#{post.tags ? post.tags.join(', ') : ''}", :type => "text"}
+              %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none', :value => "#{post.id}"}
+            .pull-right{:style => 'display: inline;'}
+              .btn-group
+                %button.post-btn.btn.btm-sm.btn-default{:type => "submit"} Save
+                %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
+                %button#post-btn-cancel.btn.btn-danger Cancel
+            = "<input id='publish' name='post[pub]' style='display: none;' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
+            %h3 Publish <i id='publisher' class="fa #{post.is_published? ? 'fa-check-square-o' : 'fa-square-o'}"></i>
+        - else
+          %form#post-form{:method => 'post', :action => '/admin/post'}
+            %p
+              %input#title-post.post-form.form-control{:name => 'post[title]', :placeholder => "title", :type => "text"}
+              %textarea#body-post.post-form.form-control{:rows => 7, :placeholder => 'body', :name => 'post[body]'}
+              %input#tags-post.post-form.form-control{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
+              %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none'}
+            .pull-right{:style => 'display: inline;'}
+              .btn-group
+                %button.post-btn.btn.btm-sm.btn-default{:type => "submit"} Save
+                %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
+                %button#post-btn-cancel.btn.btn-danger Cancel
+            %input#publish{:name => 'post[pub]', :style => 'display: none;', :type => 'checkbox'}
+            %h3 Publish <i id='publisher' class="fa fa-square-o"></i>

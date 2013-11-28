@@ -37,6 +37,8 @@ $(function() {
       url: "/admin/post",
       data: $('#post-form').serialize(),
       success: function(resp) {
+        json = JSON.parse(resp);
+        $('#id').val(json.response.post.id);
         var json = JSON.parse(resp);
         if ($(_this).attr('reload') == 'true') {
           window.location.href = '/admin';
@@ -54,6 +56,18 @@ $(function() {
       window.location.href = '/admin';
     }
   });
+
+  $('#publisher').on('click', function() {
+    if ($(this).hasClass('fa-check-square-o')) {
+      $('#publish').prop('checked', false);
+      $(this).removeClass('fa-check-square-o');
+      $(this).addClass('fa-square-o');
+    }
+    else if ($(this).hasClass('fa-square-o')) {
+      $('#publish').prop('checked', true);
+      $(this).removeClass('fa-square-o');
+      $(this).addClass('fa-check-square-o');
+    } 
+  });
     
-      
 });

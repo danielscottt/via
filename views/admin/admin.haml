@@ -2,31 +2,27 @@
 %html{:lang => "en"}
   %head
     %title Admin Console | #{CONFIG[:blog_details][:title]}
-    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
     %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
-    %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"}
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{:src => "/js/admin.js"}
-    :css
-      body {
-        background-color: #f0f0f0;
-      }
   %body
     .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          .brand{:style => 'color: #fff;'} <i class='icon-gears'></i> #{CONFIG[:blog_details][:title]}
-          .nav-collapse.collapse
-            %ul.nav
-              %li.active
-                %a{:href => "/admin"} Home
-              %li
-                %a{:href => "/admin/post"} Add / Edit Posts
-              %li
-                %a{:href => "/admin/users"} Add / Edit Users
+      .container
+        .navbar-header
+          .navbar-brand{:style => 'color: #fff;'} <i class='fa fa-gears'></i> #{CONFIG[:blog_details][:title]}
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a{:href => "/admin"} Home
+            %li
+              %a{:href => "/admin/post"} Add / Edit Posts
+            %li
+              %a{:href => "/admin/users"} Add / Edit Users
     .container{:style => 'padding: 80px 10px 10px 10px; background-color: #fff'}
       .row
-        .span12
+        .col-md-12
           %h2 Recent Posts
           %table#post-table.table.table-striped.table-bordered
             %thead
@@ -38,24 +34,34 @@
             %tbody
               - posts = Controller::Blog.get_all_posts
               - posts.each do |post|
-                %tr{:link =>"#{post.permalink}"}
-                  %td #{Time.at(post.timestamp)}
-                  %td #{post.title}
-                  - if post.is_published?
-                    %td{:style => 'text-align: center;'} <i class='icon-check icon-large'></i>
-                  - else
-                    %td{:style => 'text-align: center;'} <i class='icon-check-empty icon-large'></i>
-                  %td{:style => 'text-align: center;'}
-                    .btn-group
-                      %button.btn.view <i class='icon-eye-open icon-large'></i>
-                      %button.btn.edit <i class='icon-edit icon-large'></i>
-                      %button.btn.delete <i class='icon-remove icon-large'></i>
-    #delete-modal.modal.high.fade
-      .modal-header
-        %h3 Delete a Post
-      .modal-body
-        #post-data{:style => 'text-align: center'}
-          %i.icon-spinner.icon-spin.icon-3x
-      .modal-footer
-        %button.btn{:'data-dismiss' => 'modal'} Close
-        %button#delete-post-btn.btn.btn-danger Yes
+                - if post.is_published?
+                  %tr.success{:link =>"#{post.permalink}"}
+                    %td #{Time.at(post.timestamp)}
+                    %td #{post.title}
+                    %td{:style => 'text-align: center;'} <i class='fa fa-check fa-large'></i>
+                    %td{:style => 'text-align: center;'}
+                      .btn-group
+                        %button.btn.btn-default.view <i class='fa fa-eye fa-large'></i>
+                        %button.btn.btn-default.edit <i class='fa fa-pencil fa-large'></i>
+                        %button.btn.btn-danger.delete <i class='fa fa-ban fa-large'></i>
+                - else
+                  %tr{:link =>"#{post.permalink}"}
+                    %td #{Time.at(post.timestamp)}
+                    %td #{post.title}
+                    %td{:style => 'text-align: center;'}
+                    %td{:style => 'text-align: center;'}
+                      .btn-group
+                        %button.btn.btn-default.view <i class='fa fa-eye fa-large'></i>
+                        %button.btn.btn-default.edit <i class='fa fa-pencil fa-large'></i>
+                        %button.btn.btn-danger.delete <i class='fa fa-ban fa-large'></i>
+    #delete-modal.modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %h4{:sttle => 'margin: 0;'} Delete a Post
+          .modal-body
+            #post-data{:style => 'text-align: center'}
+              %i.fa.fa-spinner.fa-spin.fa-3x
+          .modal-footer
+            %button.btn{:'data-dismiss' => 'modal'} Close
+            %button#delete-post-btn.btn.btn-danger Yes

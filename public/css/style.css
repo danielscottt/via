@@ -19,8 +19,10 @@ a:hover {
 }
 
 h1 {
+  font-weight: bold;
+  line-height: 40px;
   font-size: 48px;
-  margin: 0;
+  margin: -5px;
   letter-spacing: -1px;
 }
 h1 a {
@@ -85,10 +87,15 @@ h2 a:hover {
   font-size: 24px;
 }
 
+#post-title {
+  font-size: 2.4em;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin-top: 10px;
+}
 .post-body {
   margin-top: 10px;
   font-weight: 300;
-  font-size: 1em;
+  font-size: 1.2em;
   color: #222;
 }
 
@@ -115,29 +122,4 @@ h2 a:hover {
 
 #descrip a {
   color: #9a9a9a;
-}
-      
-.form-signin {
-  max-width: 300px;
-  padding: 19px 29px 29px;
-  margin: 50px auto 20px;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-          box-shadow: 0 1px 2px rgba(0,0,0,.05);
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin input[type="text"],
-.form-signin input[type="password"] {
-  font-size: 16px;
-  height: auto;
-  margin-bottom: 15px;
-  padding: 7px 9px;
 }
