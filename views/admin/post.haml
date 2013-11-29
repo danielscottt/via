@@ -34,7 +34,7 @@
           %form#post-form{:role => 'form', :method => 'post', :action => '/admin/post'}
             %p
               %input#title-post.post-form.form-control{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
-              %textarea#body-post.post-form.form-control{:rows => 7, :placeholder => 'body', :name => 'post[body]'} #{post.body}
+              %textarea#body-post.post-form.form-control{:rows => 13, :placeholder => 'body', :name => 'post[body]'} #{post.body}
               %input#tags-post.post-form.form-control{:name => 'post[tags]', :value => "#{post.tags ? post.tags.join(', ') : ''}", :type => "text"}
               %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none', :value => "#{post.id}"}
             .pull-right{:style => 'display: inline;'}
@@ -43,13 +43,13 @@
                 %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
                 %button#post-btn-cancel.btn.btn-danger Cancel
             = "<input id='publish' name='post[pub]' style='display: none;' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
-            %h3 Publish <i id='publisher' class="fa #{post.is_published? ? 'fa-check-square-o' : 'fa-square-o'}"></i>
+            %h3{:style => 'color: #555'} Publish <i id='publisher' class="fa #{post.is_published? ? 'fa-check-square-o' : 'fa-square-o'}"></i>
         - else
           %form#post-form{:method => 'post', :action => '/admin/post'}
             %p
-              %input#title-post.post-form.form-control{:name => 'post[title]', :placeholder => "title", :type => "text"}
-              %textarea#body-post.post-form.form-control{:rows => 7, :placeholder => 'body', :name => 'post[body]'}
-              %input#tags-post.post-form.form-control{:name => 'post[tags]', :placeholder => "Tags", :type => "text"}
+              %input#title-post.post-form.form-control{:name => 'post[title]', :placeholder => "Add a Title", :type => "text"}
+              %textarea#body-post.post-form.form-control{:rows =>13, :placeholder => 'Add a Post', :name => 'post[body]'}
+              %input#tags-post.post-form.form-control{:name => 'post[tags]', :placeholder => "Add some Tags", :type => "text"}
               %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none'}
             .pull-right{:style => 'display: inline;'}
               .btn-group
@@ -57,4 +57,13 @@
                 %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
                 %button#post-btn-cancel.btn.btn-danger Cancel
             %input#publish{:name => 'post[pub]', :style => 'display: none;', :type => 'checkbox'}
-            %h3 Publish <i id='publisher' class="fa fa-square-o"></i>
+            %h3{:style => 'color: #555'}Publish <i id='publisher' class="fa fa-square-o"></i>
+    #hidden-body{:style => 'display: none'} 
+  :javascript
+    $(function() {
+      post = $('#body-post').val().replace(/\n/g, '<br>');
+      $('#hidden-body').html(post);
+      if ($('#hidden-body').height() > 370) {
+        $('#body-post').height($('#hidden-body').height());
+      }
+    });

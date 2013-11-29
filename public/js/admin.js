@@ -69,5 +69,13 @@ $(function() {
       $(this).addClass('fa-check-square-o');
     } 
   });
+
+  $('#body-post').on('keyup', function() {
+    post = $('#body-post').val().replace(/\n/g, '<br>');
+    $('#hidden-body').html(post);
+    if ($('#hidden-body').height() > 370) {
+      $('#body-post').height($('#hidden-body').height());
+    }
+  });
     
 });

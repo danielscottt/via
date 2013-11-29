@@ -43,12 +43,19 @@
   height: 2em;
   font-weight: bold;
   letter-spacing: -1px;
-  font-size: 34px;
+  font-size: 28px;
 }
 
 #body-post {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+
+#hidden-body {
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 20px;
   letter-spacing: -1px;
 }
 
