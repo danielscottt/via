@@ -43,7 +43,7 @@
                 %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
                 %button#post-btn-cancel.btn.btn-danger Cancel
             = "<input id='publish' name='post[pub]' style='display: none;' type='checkbox' #{post.is_published? ? 'checked' : ''}>"
-            %h3{:style => 'color: #555'} Publish <i id='publisher' class="fa #{post.is_published? ? 'fa-check-square-o' : 'fa-square-o'}"></i>
+            %h4{:style => 'color: #555'} Publish <i id='publisher' class="fa #{post.is_published? ? 'fa-check-square-o' : 'fa-square-o'}"></i>
         - else
           %form#post-form{:method => 'post', :action => '/admin/post'}
             %p
@@ -57,7 +57,7 @@
                 %button.post-btn.btn.btm-sm.btn-default{:type => "submit", :preview => 'true' } Preview
                 %button#post-btn-cancel.btn.btn-danger Cancel
             %input#publish{:name => 'post[pub]', :style => 'display: none;', :type => 'checkbox'}
-            %h3{:style => 'color: #555'}Publish <i id='publisher' class="fa fa-square-o"></i>
+            %h4{:style => 'color: #555'}Publish <i id='publisher' class="fa fa-square-o"></i>
     #hidden-body{:style => 'display: none'} 
   :javascript
     $(function() {
