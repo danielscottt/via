@@ -21,7 +21,7 @@
         - posts.each do |post|
           - if post.is_published?
             %h2#post-title
-              %a{:href => "/#{post.permalink}"}>#{post.title}
+              %a{:href => "/blog/#{post.permalink}"}>#{post.title}
             .post-body
               %p 
                 = preserve do
@@ -31,7 +31,7 @@
               |
               Tagged:&nbsp;
               - post.tags.each do |tag|
-                %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
+                %a{:href => "/blog/tag/#{tag}"}>#{tag}&nbsp; 
               %hr{:style => "margin: 0, color: #7c7c7c"}
         .row{:style => 'text-align: center; margin-top: 40px;'}
           &copy; #{CONFIG[:blog_details][:author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.

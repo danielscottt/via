@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title #{params[:tag] ? "#{CONFIG[:blog_details][:title]} | posts tagged \'#{params[:tag]}\'" : "#{CONFIG[:blog_details][:title]} | dan pittman"}
+    %link{:href => "http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://fonts.googleapis.com/css?family=Source+Sans+Pro", :rel => "stylesheet", :type => "text/css"}
+    %link{:href=>"http://fonts.googleapis.com/css?family=PT+Serif:400italic", :rel=>"stylesheet"}
+    %link{:href => "/css/style.css", :rel => "stylesheet", :type => "text/css"}
+    %script{:src => "http://code.jquery.com/jquery-1.10.0.min.js"}
+    %script{:src=>"http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
+  %body{:style => 'text-align: center;'}
+    .container{:style => 'margin-top: 40px;'}
+      .row
+        .col-md-4.col-md-offset-4
+          %img#me.img-circle.img-responsive{:src => '/img/dan.jpg'}
+      .row{:style => 'margin-top: 30px;'}
+        .col-md-4.col-md-offset-4
+          %h1 dan pittman
+      .row
+        #me.col-md-6.col-md-offset-3
+          %h3 computerist &bull; dadist &bull; drummerist
+          %p
+            I'm a developer living in Dallas, TX.  I have a long time background in systems, and am currently focused on cloud automation and distributed systems. I like solving problems.
+      .row
+        #icons.col-md-4.col-md-offset-4
+          %a.social-link{:'data-toggle' => 'tooltip', :title => '', :'data-original-title' => 'blog', :href => '/blog'}> <i class='fa fa-pencil'></i>
+          &nbsp; &nbsp;
+          %a.social-link{:'data-toggle' => 'tooltip', :title => '', :'data-original-title' => 'github', :href => 'https://github.com/danielscottt'}> <i class='fa fa-github'></i>
+          &nbsp; &nbsp;
+          %a.social-link{:'data-toggle' => 'tooltip', :title => '', :'data-original-title' => 'twitter', :href => 'https://twitter.com/danielscottt'}> <i class='fa fa-twitter'></i>
+  :javascript
+    $(function() {
+      $('.social-link').tooltip();
+    });

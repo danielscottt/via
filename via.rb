@@ -60,7 +60,7 @@ post '/admin/post/:id/delete' do
   redirect to('/admin')
 end
 
-get '/:year/:month/:slug' do
+get '/blog/:year/:month/:slug' do
   post = Controller::Blog.get_single_post(params['year'], params['month'], params['slug'])
   if post
     if post.is_published? || logged_in?
@@ -73,10 +73,13 @@ get '/:year/:month/:slug' do
   end
 end
 
-get '/tag/:tag' do
+get '/blog/tag/:tag' do
   haml :'blog/temp', :locals => {:method => :get_posts_by_tag}
 end
 
 get '/' do
+  haml :index
+end
+get '/blog' do
   haml :'blog/temp', :locals => {:method => :get_all_posts}
 end

@@ -18,7 +18,7 @@
         %span#subtitle #{CONFIG[:blog_details][:subtitle]}
       .row{:style => "margin-top: 40px;"}
         %h2#post-title
-          %a{:href => "/#{post.permalink}"}>#{post.title}
+          %a{:href => "/blog/#{post.permalink}"}>#{post.title}
         .post-body
           %p 
             = preserve do

@@ -93,6 +93,7 @@ h2 a:hover {
   margin-top: 10px;
 }
 .post-body {
+  font-family: 'Source Sans Pro', sans-serif;
   margin-top: 10px;
   font-weight: 300;
   font-size: 1.2em;
@@ -122,4 +123,21 @@ h2 a:hover {
 
 #descrip a {
   color: #9a9a9a;
+}
+
+#me h3 {
+  color: #777;
+  font-family: 'PT Serif',  serif;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+
+#me p {
+  font-size: 1.2em;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#icons {
+  color: #777;
+  font-size: 2.5em;
 }
