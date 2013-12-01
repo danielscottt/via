@@ -44,7 +44,7 @@ $(function() {
           window.location.href = '/admin';
         }
         else if ($(_this).attr('preview') == 'true') {
-          window.location.href = '/'+json.response.post.permalink
+          window.location.href = '/blog/'+json.response.post.permalink
         }
       }
     });
