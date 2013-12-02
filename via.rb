@@ -80,6 +80,6 @@ end
 get '/' do
   haml :index
 end
-get '/blog' do
+get '/blog/' do
   haml :'blog/temp', :locals => {:method => :get_all_posts}
 end

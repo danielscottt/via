@@ -13,7 +13,7 @@
     .container{:style => "margin-top: 40px"}
       .row
         %h1
-          %a{:href => "/"}
+          %a{:href => "/blog/"}
             = CONFIG[:blog_details][:title_html] ? CONFIG[:blog_details][:title_html] : CONFIG[:blog_details][:title]
         %span#subtitle #{CONFIG[:blog_details][:subtitle]}
       .row{:style => "margin-top: 40px;"}
@@ -28,7 +28,8 @@
           |
           Tagged:&nbsp;
           - post.tags.each do |tag|
-            %a{:href => "/tag/#{tag}"}>#{tag}&nbsp; 
+            %a.tag{:href => "/tag/#{tag}"}>##{tag}
+            &emsp;&emsp; 
           %hr{:style => "margin: 0, color: #7c7c7c"}
         .row{:style => 'text-align: center; margin-top: 40px;'}
           &copy; #{CONFIG[:blog_details][:author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.
@@ -39,3 +40,19 @@
               %i.fa.fa-twitter.fa-2x
             %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
               %i.fa.fa-linkedin.fa-2x
+  :javascript
+    //create hashtags
+    function parseHashTags(source) {
+      return source.replace(/\s#\w+/g, function(m) {
+        //stick a space in there because we're matching the space to prevent tagging inside code blocks.
+        return ' <a class="tag" href="/blog/tag/'+m.slice(2)+'">'+m.slice(1)+'</a>';
+      });
+    }
+
+    $(function() {
+      var len = $('.post-body').length;
+      for (var i = 0; i < len; i++) {
+        var item = $($('.post-body')[i])
+        item.html(parseHashTags(item.html()));
+      }
+    });
