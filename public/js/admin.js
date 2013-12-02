@@ -1,3 +1,11 @@
+function showSave() {
+  $('#save-alert').fadeIn('fast', function() {
+    setTimeout(function() {
+      $('#save-alert').fadeOut('fast');
+    }, 2000);
+  });
+}
+
 $(function() {
 
   $('.edit').on('click', function() {
@@ -6,7 +14,7 @@ $(function() {
   });
   
   $('.view').on('click', function() {
-    var permalink = '/' + $(this).closest('tr').attr('link');
+    var permalink = '/blog/' + $(this).closest('tr').attr('link');
     window.location.href = permalink;
   });
 
@@ -37,9 +45,9 @@ $(function() {
       url: "/admin/post",
       data: $('#post-form').serialize(),
       success: function(resp) {
-        json = JSON.parse(resp);
-        $('#id').val(json.response.post.id);
         var json = JSON.parse(resp);
+        $('#id').val(json.response.post.id);
+        showSave();
         if ($(_this).attr('reload') == 'true') {
           window.location.href = '/admin';
         }

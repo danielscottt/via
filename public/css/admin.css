@@ -66,3 +66,18 @@
   letter-spacing: -1px;
   font-style: italic;
 }
+
+#alert-container {
+  position: absolute;
+  top: 50px; 
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 150px;
+}
+
+#save-alert {
+  display: none;
+  text-align: center;
+  font-size: 16px;
+}

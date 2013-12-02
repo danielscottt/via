@@ -28,8 +28,11 @@
               %a{:href => "/admin/post"} Add / Edit Posts
             %li
               %a{:href => "/admin/users"} Add / Edit Users
-    .container{:style => 'margin-top: 50px;'}
-      .row
+    #alert-container
+      #save-alert.alert.alert-success
+        Post saved
+    .container
+      .row{:style => 'margin-top: 105px;'}
         - if post
           %form#post-form{:role => 'form', :method => 'post', :action => '/admin/post'}
             %p
