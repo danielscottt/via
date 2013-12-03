@@ -23,6 +23,14 @@ get '/admin' do
   end
 end
 
+not_found do
+  haml :'404'
+end
+
+error do
+  haml :'500'
+end
+
 post '/admin' do
   result = Controller::Admin.login(params[:post])
   if result[:response] == 'success' 
@@ -34,12 +42,12 @@ post '/admin' do
 end
 
 get '/admin/post/:year/:month/:slug' do
-  halt 404 unless logged_in?
+  raise Sinatra::NotFound unless logged_in?
   haml :'admin/post'
 end
 
 get '/admin/post' do
-  halt 404 unless logged_in?
+  raise Sinatra::NotFound unless logged_in?
   haml :'admin/post'
 end
 
@@ -66,10 +74,10 @@ get '/blog/:year/:month/:slug' do
     if post.is_published? || logged_in?
       haml :'blog/single', :locals => {:post => post}
     else
-      halt 404
+      raise Sinatra::NotFound
     end
   else
-    halt 404
+    raise Sinatra::NotFound
   end
 end
 
@@ -80,6 +88,7 @@ end
 get '/' do
   haml :index
 end
+
 get '/blog/' do
   haml :'blog/temp', :locals => {:method => :get_all_posts}
 end
