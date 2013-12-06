@@ -21,7 +21,7 @@ module Controller
      permalink = "#{year}/#{month}/#{slug}"
      post_hash = @posts.find_one({'permalink' => permalink})
      if post_hash
-       post = Model::Post.new(@posts.find_one(post_hash))
+       Model::Post.new(@posts.find_one(post_hash))
      else
        nil
      end

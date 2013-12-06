@@ -37,6 +37,10 @@ module Model
     def save
       details['permalink'] = permalink
       details['id']        = id
+      #don't overwrite the timestamp
+      if cursor.find_one({'id' => id})
+        details.delete_if{|k, _| k == 'timestamp'}
+      end
       cursor.update({'id' => details['id']}, {'$set' => details}, :upsert => true)
     end
 
