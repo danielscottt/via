@@ -1,5 +1,5 @@
 body {
-  font-family: 'Source Sans Pro', sans-serif;;
+  font-family: 'Source Sans Pro', sans-serif;
   background-image: -ms-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #F0F0F0 100%);
   background-image: -moz-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #F0F0F0 100%);
   background-image: -o-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #F0F0F0 100%);
@@ -89,6 +89,7 @@ h2 a:hover {
 
 #post-title {
   font-size: 2.4em;
+  font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   margin-top: 10px;
 }
@@ -96,7 +97,7 @@ h2 a:hover {
   font-family: 'Source Sans Pro', sans-serif;
   margin-top: 10px;
   font-weight: 300;
-  font-size: 1.2em;
+  font-size: 1.3em;
   color: #222;
 }
 
@@ -133,8 +134,9 @@ h2 a:hover {
 }
 
 #me p {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
 }
 
 #icons {
