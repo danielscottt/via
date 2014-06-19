@@ -7,15 +7,12 @@ module Controller
   module Admin
     extend self
 
-    attr_reader :posts, :users
-
     def init(db)
-      @posts = db['posts']
-      @users = db['users']
+      @db = db
     end
 
     def login(details)
-      user = users.find_one({'user' => details['user']})
+      user = @db['users'].find_one({'user' => details['user']})
       if user
         result = user.delete_if{|k,v| k == '_id'}
         if result['password'] == BCrypt::Engine.hash_secret(details['password'], result['salt'])
@@ -36,14 +33,14 @@ module Controller
         details['published'] = false
       end
       details['timestamp'] = Time.now
-      details['tags']      = details['tags'].split(', ')
-      post = Model::Post.new(details.delete_if{|k, v| k == 'pub'}, posts)
+      post = Model::Post.new(details.delete_if{|k, v| k == 'pub'}, @db)
       post.save
+      Model::Topic.new(details['topic'], @db).save
       post
     end
 
     def delete_post(params)
-      post_hash = posts.find_one({'id' => params[:id]})
+      post_hash = @db['posts'].find_one({'id' => params[:id]})
       post = Model::Post.new(post_hash, posts)
       post.delete
     end

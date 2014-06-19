@@ -38,7 +38,7 @@
             %p
               %input#title-post.post-form.form-control{:name => 'post[title]', :value => "#{post.title}", :type => "text"}
               %textarea#body-post.post-form.form-control{:rows => 13, :placeholder => 'body', :name => 'post[body]'} #{post.body}
-              %input#tags-post.post-form.form-control{:name => 'post[tags]', :value => "#{post.tags ? post.tags.join(', ') : ''}", :type => "text"}
+              %input#tags-post.post-form.form-control{:name => 'post[topics]', :value => "#{post.topic || ''}", :type => "text"}
               %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none', :value => "#{post.id}"}
             .pull-right{:style => 'display: inline;'}
               .btn-group
@@ -52,7 +52,7 @@
             %p
               %input#title-post.post-form.form-control{:name => 'post[title]', :placeholder => "Add a Title", :type => "text"}
               %textarea#body-post.post-form.form-control{:rows =>13, :placeholder => 'Add a Post', :name => 'post[body]'}
-              %input#tags-post.post-form.form-control{:name => 'post[tags]', :placeholder => "Add some Tags", :type => "text"}
+              %input#tags-post.post-form.form-control{:name => 'post[topic]', :placeholder => "Add a Topic", :type => "text"}
               %input{:name => 'post[id]', :type => "text", :id => 'id', :style => 'display: none'}
             .pull-right{:style => 'display: inline;'}
               .btn-group

@@ -1,5 +1,6 @@
 require 'time'
 require 'models/post'
+require 'models/topic'
 require 'bcrypt'
 
 module Controller
@@ -7,21 +8,22 @@ module Controller
     extend self
 
     def init(db)
-      @posts = db['posts']
-      @users = db['users']
+      @db = db
+    end
+
+    def get_topics
+      @db['topics'].find.to_a.map { |t| Model::Topic.new(t['name'], @db) }
     end
 
     def get_all_posts
-      posts = []
-      @posts.find({}, {:sort => ['timestamp', :desc]}).to_a.each{|p| posts << Model::Post.new(p)}
-      posts
+      @db['posts'].find({}, {:sort => ['timestamp', :desc]}).to_a.map { |p| Model::Post.new(p) }
     end
 
    def get_single_post(year, month, slug)
      permalink = "#{year}/#{month}/#{slug}"
-     post_hash = @posts.find_one({'permalink' => permalink})
+     post_hash = @db['posts'].find_one({'permalink' => permalink})
      if post_hash
-       Model::Post.new(@posts.find_one(post_hash))
+       Model::Post.new(@db['posts'].find_one(post_hash))
      else
        nil
      end
@@ -29,7 +31,7 @@ module Controller
 
     def get_posts_by_tag(tag)
       posts = []
-      @posts.find({'tags' => tag}).to_a.each{|p| posts << Model::Post.new(p)}
+      @db['posts'].find({'tags' => tag}).to_a.each{|p| posts << Model::Post.new(p)}
       posts
     end
     

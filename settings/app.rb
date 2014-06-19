@@ -15,7 +15,7 @@ LOGGER = Logger.new(CONFIG[:log_path], 'weekly')
 
 require 'blog_controller'
 require 'admin_controller'
-Controller::Blog.init(db)
 Controller::Admin.init(db)
+Controller::Blog.init(db)
 
 require 'via'

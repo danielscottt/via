@@ -17,23 +17,16 @@
             = CONFIG[:blog_details][:title_html] ? CONFIG[:blog_details][:title_html] : CONFIG[:blog_details][:title]
         %span#subtitle #{CONFIG[:blog_details][:subtitle]}
       .row{:style => "margin-top: 40px;"}
-        - posts = params[:tag] ? Controller::Blog.send(method, params[:tag]) : Controller::Blog.send(method)
-        - posts.each do |post|
-          - if post.is_published?
-            %h2#post-title
-              %a{:href => "/blog/#{post.permalink}"}>#{post.title}
-            .post-body
-              %p 
-                = preserve do
-                  != Controller::Blog.compile_body(post.body)
-            .post-footer
-              #{Time.at(post.timestamp).strftime('%m.%d.%Y')}
-              |
-              Tagged:&nbsp;
-              - post.tags.each do |tag|
-                %a.tag{:href => "/blog/tag/#{tag}"}>##{tag}
-                &emsp;&emsp;
-              %hr{:style => "margin: 0, color: #7c7c7c"}
+        <p style='font-size: 20px; color: #555;'>These posts are separated by topic, as I typically rabbit hole on a specific thing for a period of time.  My MO is start at the beginning, so there is often an attempt to tie some history to modern concepts.</p>
+        %hr{:style => "margin: 0, color: #7c7c7c"}
+      .row{:style => "margin-top: 20px;"}
+        - Controller::Blog.get_topics.each do |topic|
+          %h2{:style => 'font-weight: bold; color: #222; letter-spacing: -1px'} #{topic.name}
+          %ul
+          - topic.posts.each do |post|
+            - if post.is_published?
+              %li <span style='color: #888; font-size: 16px;'>#{Time.at(post.timestamp).strftime('%m.%d.%Y')}</span> | <a href=#{post.permalink}><span style='font-weight: bold; font-size: 16px;'>#{post.title}</span></a>
+            
         .row{:style => 'text-align: center; margin-top: 40px;'}
           &copy; #{CONFIG[:blog_details][:author]} -- Powered by <a href="https://github.com/danielscottt/Via">Via</a>.
           #links
@@ -43,19 +36,3 @@
               %i.fa.fa-twitter.fa-2x
             %a#linkedin-link{:href => "https://linkedin.com/in/danielscottt/"}
               %i.fa.fa-linkedin.fa-2x
-  :javascript
-    //create hashtags
-    function parseHashTags(source) {
-      return source.replace(/\s#\w+/g, function(m) {
-        //stick a space in there because we're matching the space to prevent tagging inside code blocks.
-        return ' <a class="tag" href="/blog/tag/'+m.slice(2)+'">'+m.slice(1)+'</a>';
-      });
-    }
-
-    $(function() {
-      var len = $('.post-body').length;
-      for (var i = 0; i < len; i++) {
-        var item = $($('.post-body')[i])
-        item.html(parseHashTags(item.html()));
-      }
-    });

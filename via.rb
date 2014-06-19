@@ -81,14 +81,14 @@ get '/blog/:year/:month/:slug' do
   end
 end
 
-get '/blog/tag/:tag' do
-  haml :'blog/temp', :locals => {:method => :get_posts_by_tag}
-end
-
 get '/' do
   haml :index
 end
 
 get '/blog/?' do
-  haml :'blog/temp', :locals => {:method => :get_all_posts}
+  haml :'blog/index'
+end
+
+get '/blog/all/?' do
+  haml :'blog/all'
 end
